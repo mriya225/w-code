@@ -10,76 +10,230 @@
     <link href="./src/bootstrap.css" rel="stylesheet">
     <link href="./src/style.css" rel="stylesheet">
     <link href="./src/line-awesome-nob.css" rel="stylesheet">
+    <script src="./src/jquery.js"></script>
+    <script src="./src/bootstrap.js"></script>
+    <script src="./src/app.js"></script>
     <link rel="stylesheet" href="./src/helper.css">
     <link rel="stylesheet" href="./src/main_vue.css">
 </head>
 
 <body class="color-theme-blue push-content-right theme-light">
 <div class="wrapper">
-    <div class="page" style="position: absolute;overflow-y: auto">
+    <div class="page vue-loading" style="position: absolute;overflow-y: auto">
         <div id="content">
             <header class="row m-0 fixed-header">
-                <div class="left"><a href="#"><i class="la la-arrow-left"></i></a>
+                <div class="left"><a href="#"><i class="la la-arrow-left"
+                                                 style="font-size: 1.5rem; line-height: 44px;"></i></a>
                 </div>
-                <div class="col center"><a href="#" class="logo">请假</a></div>
+                <div class="col center"><a href="javascript:void(0);" class="logo">
+                    请假条
+                </a></div>
             </header>
             <div class="page-content">
-                <div style="padding: 0 15px;">
-                    <div class="weui-cells__title">
-                        <div class="mh--15"><a href="#"
-                                               class="btn btn-link btn-block mb-30 btn-lg bg-white"><i
-                                class="la la-plus"></i> 新建请假申请
-                        </a></div>
-                        <strong id="ip1"></strong> 提交的请假申请
-                    </div>
-                    <div class="weui-cells weui-cells_separated weui-cells_rounded mb-20"><a
-                            href="./code.html" class="weui-cell weui-cell_access">
-                        <div class="weui-cell__bd">
-                            <div class="weui-cell__bd__hd" id="ip7"></div>
-                            <div class="weui-cell__bd__bd" id="ip8">请假原因:&nbsp;</div>
-                            <div class="weui-cell__bd__bd" id="time1">请假时间:&nbsp;</div>
-                            <div class="weui-cell__bd__bd" id="time2">申请时间:&nbsp;</div>
-                            <div class="weui-cell__bd__bd" id="ip5">审核人:&nbsp;</div>
-                            <div class="weui-cell__bd__bd_status"><span class="green">通过"老师审核"</span> <span
-                                    class="text-primary pull-right link">出示假条</span></div>
+                <div style="padding: 0px 15px;">
+                    <div class="mv-15 flex align-items-center"><a
+                            href="./index.html"
+                            class="btn btn-link btn-block btn-lg bg-white shadow-none">
+                        出示假条 <i class="la la-angle-right"></i></a></div>
+                    <div id="accordionOperation" class="accordion">
+                        <div class="card shadow-none">
+                            <div id="ao_check" class="card-header">
+                                <h2 class="mb-0">
+                                    <button type="button" data-toggle="collapse" data-target="#ao_check_body"
+                                            class="btn btn-link btn-block text-left shadow-none ph-0 d-flex align-items-center collapsed"
+                                            aria-expanded="false">
+                                        销假
+                                        <i class="la la-angle-down ml-auto"></i></button>
+                                </h2>
+                            </div>
+                            <div id="ao_check_body" aria-labelledby="ao_check" data-parent="#accordionOperation"
+                                 class="collapse" style="">
+                                <form onsubmit="return false" class="card-body">
+                                    <div class="form-group clearfix mb-20"><label class="control-label wp-100">
+                                        当前位置
+                                        <span class="text-danger">（必填）</span>
+                                        <button class="btn btn-primary btn-sm float-right">点此尝试自动获取位置</button>
+                                    </label> <input type="text" readonly="readonly" placeholder="获取位置失败时手动输入"
+                                                    class="form-control mb-10" style="display: none;"></div>
+                                    <div class="form-group clearfix mb-20"><label class="control-label">
+                                        附件
+                                        <small class="text-muted font-weight-light">（根据老师的要求上传，若无要求可忽略）</small></label>
+                                        <input type="hidden" name="review_attachments" id="review_attachments">
+                                        <div class="jFiler jFiler-theme-dragdropbox"><input type="file" name="files[]"
+                                                                                            id="bjmfuploader_review_attachments"
+                                                                                            multiple="multiple"
+                                                                                            style="position: absolute; left: -9999px; top: -9999px; z-index: -9999;">
+                                            <div class="jFiler-input-dragDrop">
+                                                <div class="jFiler-input-inner">
+                                                    <div class="jFiler-input-icon"><i class="icon-cloud-upload"></i>
+                                                    </div>
+                                                    <div class="jFiler-input-text"><h3>拖拽文件到此处</h3> <span
+                                                            style="display:inline-block; margin: 15px 0">或</span></div>
+                                                    <a class="jFiler-input-choose-btn blue-light">点此选择要上传的文件</a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix mb-20"><label class="control-label">
+                                        备注
+                                    </label> <input type="text" id="review_comment" class="form-control mb-10"></div>
+                                    <a href="javascript:" class="weui-btn weui-btn_primary">销假</a> <!----></form>
+                            </div>
                         </div>
-                        <div class="weui-cell__ft"></div>
-                    </a></div>
+                    </div>
+                    <div class="mb-25"></div>
+                    <div class="weui-cells__title">请假及审核状态</div>
+                    <div class="weui-cells weui-cells_form">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd"><label class="weui-label">请假人</label></div>
+                            <div class="weui-cell__bd" id="ip1">
+                                <small class="text-muted" id="ip4"></small>
+                                <div class="font-12 text-muted mt-5" id="ip7">班级：</div>
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd"><label class="weui-label">提交时间</label></div>
+                            <div class="weui-cell__bd" id="time1"></div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd"><label class="weui-label">流程方案</label></div>
+                            <div class="weui-cell__bd">
+                                导师审核后辅导员审核
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd"><label class="weui-label">当前状态</label></div>
+                            <div class="weui-cell__bd green">
+                                已审核
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd"><label class="weui-label">审核人</label></div>
+                            <div class="weui-cell__bd">王岩</div>
+                        </div>
+                    </div>
+                    <div class="weui-cells__title collapsible  collapsed ">审核历史<span class="right-tip">展开 <i
+                            class="la la-angle-down"></i></span></div>
+                    <div class="weui-cells weui-cells_separated weui-cells_form">
+                        <div class="weui-cell stay">
+                            <div class="weui-cell__bd">
+                                <div class="weui-cell__bd__hd" id="time2"></div>
+                                <div class="weui-cell__bd__bd">
+                                    审核人：王岩
+                                </div>
+                                <div class="weui-cell__bd__bd_status">通过"辅导员审核"</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-cells__title">
+                        请假内容
+                    </div>
+                    <div class="html-form readonly">
+                        <div data-type="radio" class="form-group"><label class=" control-label">请假类型 <span
+                                class="required-mark" style="color: red;">*</span></label>
+                            <div><label class="radio-inline" style="margin-right: 10px; color: var(--primary);"><input
+                                    link_n="fn_87090" bmfe="bmfe" bmneed="1" type="radio" value="事假" title="事假"
+                                    name="rd[fn_87090]" disabled="disabled" checked="checked"> 事假</label><label
+                                    class="radio-inline" style="margin-right: 10px;"><input link_n="fn_87090"
+                                                                                            bmfe="bmfe" bmneed="1"
+                                                                                            type="radio" value="病假"
+                                                                                            title="病假"
+                                                                                            name="rd[fn_87090]"
+                                                                                            disabled="disabled">
+                                病假</label><label class="radio-inline" style="margin-right: 10px;"><input
+                                    link_n="fn_87090" bmfe="bmfe" bmneed="1" type="radio" value="公假" title="公假"
+                                    name="rd[fn_87090]" disabled="disabled"> 公假</label>
+                                <p class="placeholder">公假：活动、实习等原因</p></div>
+                        </div>
+                        <div data-type="radio" class="form-group"><label class=" control-label">是否离校 <span
+                                class="required-mark" style="color: red;">*</span></label>
+                            <div><label class="radio-inline" style="margin-right: 10px; color: var(--primary);"><input
+                                    link_n="fn_92011" bmfe="bmfe" bmneed="1" type="radio" value="离校" title="离校"
+                                    name="rd[fn_92011]" disabled="disabled" checked="checked"> 离校</label><label
+                                    class="radio-inline" style="margin-right: 10px;"><input link_n="fn_92011"
+                                                                                            bmfe="bmfe" bmneed="1"
+                                                                                            type="radio" value="不离校"
+                                                                                            title="不离校"
+                                                                                            name="rd[fn_92011]"
+                                                                                            disabled="disabled">
+                                不离校</label>
+                                <p class="placeholder"></p></div>
+                        </div>
+                        <div linkn="fn_92011" linkv="[&quot;离校&quot;]" data-type="radio" class="form-group" style="">
+                            <label class=" control-label">是否离开本市 <span class="required-mark"
+                                                                       style="color: red;">*</span></label>
+                            <div><label class="radio-inline" style="margin-right: 10px;"><input
+                                    link_n="leave_city" bmfe="bmfe" bmneed="1" type="radio" value="是" title="是"
+                                    name="rd[leave_city]" disabled="disabled"> 是</label><label
+                                    class="radio-inline" style="margin-right: 10px; color: var(--primary);"><input
+                                    link_n="leave_city"
+                                    bmfe="bmfe" bmneed="1"
+                                    type="radio" value="否"
+                                    title="否" checked="checked"
+                                    name="rd[leave_city]"
+                                    disabled="disabled">
+                                否</label>
+                                <p class="placeholder"></p></div>
+                        </div>
+                        <div data-type="datetime" class="form-group"><label class=" control-label">起始时间 <span
+                                class="required-mark" style="color: red;">*</span></label>
+                            <div><input id="time3" link_n="fn_907" bmfe="bmfe" bmneed="1" readonly="readonly"
+                                        name="rd[fn_907]"
+                                        type="text" placeholder="" class="form-control form-control-datetimepicker"
+                                        style="border: 1px solid rgb(229, 230, 231);" disabled="disabled"
+                                        value=""></div>
+                        </div>
+                        <div data-type="datetime" class="form-group"><label class=" control-label">结束时间 <span
+                                class="required-mark" style="color: red;">*</span></label>
+                            <div><input id="time4" link_n="fn_2379" bmfe="bmfe" bmneed="1" readonly="readonly"
+                                        name="rd[fn_2379]"
+                                        type="text" placeholder="" class="form-control form-control-datetimepicker"
+                                        style="border: 1px solid rgb(229, 230, 231);" disabled="disabled"
+                                        value=""></div>
+                        </div>
+                        <div data-type="text" class="form-group"><label class=" control-label">联系电话</label>
+                            <div><input bmfe="bmfe" type="text" name="rd[fn_90886]" placeholder="期间可联系到本人的号码" dic=""
+                                        value="18684578865" vchk="" class="form-control" disabled="disabled"></div>
+                        </div>
+                        <div data-type="textarea" class="form-group"><label class=" control-label">事由说明 <span
+                                class="required-mark" style="color: red;">*</span></label>
+                            <div><textarea bmfe="bmfe" bmneed="1" name="rd[fn_901]" placeholder="事由详情说明"
+                                           class="form-control" style="height: 66px; overflow-y: hidden;"
+                                           disabled="disabled">去一趟校外办事</textarea></div>
+                        </div>
+                        <div data-type="file" class="form-group"><label class=" control-label">相关证明</label>
+                            <div><p class="placeholder"></p></div>
+                        </div>
+                        <div class="required-mark-bottom mb-15" style="color: rgb(204, 204, 204);">标记有 <span
+                                style="color: red;">*</span> 的是必填项。
+                        </div>
+                    </div>
+                    <div class="mb-15"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <script src="./src/date.js"></script>
 <script>
     window.onload = function () {
         const ip1 = document.querySelector('#ip1');
-        const ip5 = document.querySelector('#ip5');
+        const ip4 = document.querySelector('#ip4');
         const ip7 = document.querySelector('#ip7');
-        const ip8 = document.querySelector('#ip8');
         const time1 = document.querySelector('#time1');
         const time2 = document.querySelector('#time2');
+        const time3 = document.querySelector('#time3');
+        const time4 = document.querySelector('#time4');
 
         // 初始化
-        const gip1 = localStorage.getItem('ip1');
-        const gip4 = localStorage.getItem('ip4');
-        const gip5 = localStorage.getItem('ip5');
-        const gip7 = localStorage.getItem('ip7');
-        const gip8 = localStorage.getItem('ip8');
-        if (gip1 != null) ip1.innerHTML += `${gip1} (${gip4})`;
-        if (gip5 != null) ip5.innerHTML += gip5;
-        if (gip7 != null) ip7.innerHTML += gip7;
-        if (gip8 != null) ip8.innerHTML += gip8;
+        ip1.prepend("沈文龙 ");
+        ip4.innerHTML += "(2099183013)";
+        ip7.innerHTML += "2020－经济学";
 
         let date = new Date();
-        time1.innerHTML += date.format("yyyy-MM-dd hh:mm") + " ~ ";
-        date.setTime(date.getTime() + (180 * 60 * 1000));
-        time1.innerHTML += date.format("yyyy-MM-dd hh:mm");
-
-        let date2 = new Date();
-        date2.setTime(date2.getTime() - (40 * 60 * 1000));
-        time2.innerHTML += date2.format("yyyy年MM月dd日 hh:mm");
+        time1.innerHTML += date.format("yyyy-MM-dd 07:45:52");
+        time2.innerHTML += date.format("yyyy-MM-dd 08:10:45");
+        time3.value = date.format("yyyy-MM-dd 08:00");
+        time4.value = date.format("yyyy-MM-dd 18:00");
     }
 </script>
 </body>
