@@ -11,6 +11,7 @@
     <link href="./src/style.css" rel="stylesheet">
     <link href="./src/line-awesome-nob.css" rel="stylesheet">
     <script src="./src/jquery.js"></script>
+    <script src="./src/jquery-qrcode.js"></script>
     <script src="./src/weui.js"></script>
     <script src="./src/app.js"></script>
     <link rel="stylesheet" href="./src/helper.css">
@@ -101,9 +102,24 @@
                         出示假条
                     </a>
                 </div>
+
+                <div class="right auto">
+                    <a href="javascript:" onclick="$('#qrcode_box2_area').toggle();">
+                        <i class="las la-qrcode font-22"></i> 出示假条核验码
+                    </a>
+                </div>
             </header>
             <div class="page-content">
                 <div style="padding:0 15px;">
+                    <div id="qrcode_box2_area" class="text-center my-20 hide">
+                        <div id="qrcode_box2" class="mt-10 ">
+                            <div id="qrcode_img2">
+                            </div>
+                            <div style="color: red;font-size: 12px;">只能使用专用核验工具扫码</div>
+                        </div>
+                    </div>
+
+
                     <div class="card mt-15">
                         <div class="card-body ">
                             <div class="card-text relative text-dark">
@@ -235,18 +251,6 @@
         const time3 = document.querySelector('#time3');
 
         // 初始化
-        /*const gip1 = localStorage.getItem('ip1');
-        const gip2 = localStorage.getItem('ip2');
-        const gip3 = localStorage.getItem('ip3');
-        const gip4 = localStorage.getItem('ip4');
-        const gip5 = localStorage.getItem('ip5');
-        const gip6 = localStorage.getItem('ip6');
-        if (gip1 != null) ip1.innerHTML += "沈文龙";
-        if (gip2 != null) ip2.innerHTML += "男";
-        if (gip3 != null) ip3.innerHTML += "商学院";
-        if (gip4 != null) ip4.innerHTML += "2099183013";
-        if (gip5 != null) ip5.innerHTML += "王岩";
-        if (gip6 != null) ip6.src = "./src/header.jpg";*/
         ip1.innerHTML += "沈文龙";
         ip2.innerHTML += "男";
         ip3.innerHTML += "商学院";
@@ -259,6 +263,12 @@
         let date = new Date();
         date.setTime(date.getTime() - (28 * 60 * 1000));
         time3.innerText = date.format("yyyy-MM-dd 08:10");
+
+        $('#qrcode_img2').qrcode({
+            text: 'S0L:2061554-d9345baa229704ca97\n',
+            width: 158,
+            height: 158
+        });
     }
 </script>
 </body>
