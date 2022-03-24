@@ -223,7 +223,7 @@
             var hour = d.getHours();
             if (hour < 12) t += "上午";
             else t += "下午";
-            t += d.format("H:mm:ss");
+            t += d.format("hh:mm:ss");
             $w.html(t).css({
                 top: $wt + '%'
             });
