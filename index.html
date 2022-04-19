@@ -258,8 +258,18 @@
         ip5.innerHTML += "王岩";
         ip6.src = "./src/header.jpg";
 
-        time1.innerText = new Date().format("yyyy-MM-dd") + " 上午";
-        time2.innerText = new Date().format("yyyy-MM-dd") + " 下午";
+        time1.innerText = new Date().format("yyyy-MM-dd");
+        time2.innerText = new Date().format("yyyy-MM-dd");
+        const hour = new Date().getHours();
+        if (hour < 12) {
+            time1.innerText += " 上午";
+            time2.innerText += " 上午";
+        }
+        else {
+            time1.innerText += " 下午";
+            time2.innerText += " 下午";
+        }
+
         let date = new Date();
         date.setTime(date.getTime() - (28 * 60 * 1000));
         time3.innerText = date.format("yyyy-MM-dd 08:10");
